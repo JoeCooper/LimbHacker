@@ -304,7 +304,6 @@ namespace NobleMuffins.LimbHacker.Guts
                             var mesh = new Mesh();
 
                             skinnedMeshRenderer.materials = snapshot.materials;
-                            skinnedMeshRenderer.sharedMesh = mesh;
                             
                             mesh.vertices = snapshot.vertices;
                             mesh.normals = snapshot.normals;
@@ -318,8 +317,10 @@ namespace NobleMuffins.LimbHacker.Guts
                             {
                                 mesh.SetTriangles(snapshot.indices[j], j, false);
                             }
-                            
-                            mesh.UploadMeshData(true);
+
+							mesh.UploadMeshData(true);
+
+							skinnedMeshRenderer.sharedMesh = mesh;
                         }
                         else
                         {
