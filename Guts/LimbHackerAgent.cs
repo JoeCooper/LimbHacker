@@ -154,7 +154,7 @@ namespace NobleMuffins.LimbHacker.Guts
                     alfaObject, bravoObject
                 };
 
-				jobSpecification.Hackable.handleSlice(results, jobState.Yield.PlaneInWorldSpace);
+				jobSpecification.Hackable.handleSlice(results, jobState.Yield.PlaneInWorldSpace, jobState.Yield.FocalPointInWorldSpace);
 
 				if(backIsNew) {
                     Destroy(jobSpecification.Subject);

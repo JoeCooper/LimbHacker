@@ -1234,7 +1234,8 @@ namespace NobleMuffins.LimbHacker.Guts
                     bravoBuilder.Add(bravoSnapshot);
                 }
 
-				var planeInWorldSpace = Vector4.zero;
+				Vector4 planeInWorldSpace;
+				Vector3 focalPointInWorldSpace;
 
 				{
 					var severedJointKey = jobSpec.JointName;
@@ -1276,7 +1277,7 @@ namespace NobleMuffins.LimbHacker.Guts
 					var deltaParent = position0 - position1;
 					var deltaChildren = position1 - position2;
 
-					var position = Vector3.Lerp(position1, position2, jobSpec.RootTipProgression);
+					focalPointInWorldSpace = Vector3.Lerp(position1, position2, jobSpec.RootTipProgression);
 
 					var normalFromParentToChild = -Vector3.Lerp(deltaParent, deltaChildren, jobSpec.RootTipProgression).normalized;
 
@@ -1301,10 +1302,10 @@ namespace NobleMuffins.LimbHacker.Guts
 						planeInWorldSpace = normalFromParentToChild;
 					}
 
-					planeInWorldSpace.w = -(planeInWorldSpace.x * position.x + planeInWorldSpace.y * position.y + planeInWorldSpace.z * position.z);
+					planeInWorldSpace.w = -(planeInWorldSpace.x * focalPointInWorldSpace.x + planeInWorldSpace.y * focalPointInWorldSpace.y + planeInWorldSpace.z * focalPointInWorldSpace.z);
 				}
 
-				jobState.Yield = new JobYield(jobSpec, planeInWorldSpace, alfaBuilder, bravoBuilder);
+				jobState.Yield = new JobYield(jobSpec, planeInWorldSpace, focalPointInWorldSpace, alfaBuilder, bravoBuilder);
             }
             catch (System.Exception ex)
             {
