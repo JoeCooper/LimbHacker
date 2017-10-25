@@ -1234,7 +1234,77 @@ namespace NobleMuffins.LimbHacker.Guts
                     bravoBuilder.Add(bravoSnapshot);
                 }
 
-                jobState.Yield = new JobYield(jobSpec, alfaBuilder, bravoBuilder);
+				var planeInWorldSpace = Vector4.zero;
+
+				{
+					var severedJointKey = jobSpec.JointName;
+
+					VectorAccumulator meanChildPosition = new VectorAccumulator();
+
+					if (jobSpec.RootTipProgression > 0f)
+					{
+						foreach (KeyValuePair<string, NodeMetadata> kvp in metadataByNodeName)
+						{
+							if (kvp.Value.ParentKey == severedJointKey)
+							{
+								meanChildPosition.Add(kvp.Value.LocalPosition);
+							}
+						}
+					}
+
+					var severedJointMetadata = metadataByNodeName[severedJointKey];
+
+					var severedJointMatrix = severedJointMetadata.WorldToLocalMatrix.inverse;
+
+					NodeMetadata parentJointMetadata;
+
+					Vector3 position0, position1;
+
+					position1 = severedJointMatrix.MultiplyPoint3x4(Vector3.zero);
+
+					if (metadataByNodeName.TryGetValue(severedJointMetadata.ParentKey, out parentJointMetadata))
+					{
+						var severedJointParentMatrix = parentJointMetadata.WorldToLocalMatrix.inverse;
+						position0 = severedJointParentMatrix.MultiplyPoint3x4(Vector3.zero);
+					}
+					else {
+						position0 = position1;
+					}
+
+					var position2 = severedJointMatrix.MultiplyPoint3x4(meanChildPosition.Mean);
+
+					var deltaParent = position0 - position1;
+					var deltaChildren = position1 - position2;
+
+					var position = Vector3.Lerp(position1, position2, jobSpec.RootTipProgression);
+
+					var normalFromParentToChild = -Vector3.Lerp(deltaParent, deltaChildren, jobSpec.RootTipProgression).normalized;
+
+					if (jobSpec.TiltPlane.HasValue)
+					{
+						var fromWorldToLocalSpaceOfBone = jobSpec.NodeMetadata[severedJointKey].WorldToLocalMatrix;
+
+						var v = jobSpec.TiltPlane.Value;
+						v = fromWorldToLocalSpaceOfBone.MultiplyVector(v);
+						v = severedJointMatrix.MultiplyVector(v);
+						v.Normalize();
+
+						if (Vector3.Dot(v, normalFromParentToChild) < 0f)
+						{
+							v = -v;
+						}
+
+						planeInWorldSpace = ClampNormalToBicone(v, normalFromParentToChild, 30f);
+					}
+					else
+					{
+						planeInWorldSpace = normalFromParentToChild;
+					}
+
+					planeInWorldSpace.w = -(planeInWorldSpace.x * position.x + planeInWorldSpace.y * position.y + planeInWorldSpace.z * position.z);
+				}
+
+				jobState.Yield = new JobYield(jobSpec, planeInWorldSpace, alfaBuilder, bravoBuilder);
             }
             catch (System.Exception ex)
             {

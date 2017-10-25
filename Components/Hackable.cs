@@ -51,7 +51,7 @@ namespace NobleMuffins.LimbHacker
             }
         }
 
-        public void handleSlice(GameObject[] results)
+		public void handleSlice(GameObject[] results, Vector4 planeInLocalSpace)
         {
             bool originalRemainsAfterSlice = false;
 
@@ -68,7 +68,7 @@ namespace NobleMuffins.LimbHacker
 
 			if (Sliced != null)
 			{
-				Sliced(this, new SliceEventArgs(results));
+				Sliced(this, new SliceEventArgs(new Plane(planeInLocalSpace, planeInLocalSpace.w), results));
 			}
         }
 
