@@ -145,8 +145,6 @@ namespace NobleMuffins.LimbHacker.Guts
                     bravoObject.transform.localRotation = rotation;
 
                     bravoObject.layer = jobSpecification.Subject.layer;
-
-                    Destroy(jobSpecification.Subject);
                 }
 
                 ApplySnapshotsToRoot(alfaObject, jobYield.Alfa);
@@ -157,6 +155,10 @@ namespace NobleMuffins.LimbHacker.Guts
                 };
 
                 jobSpecification.Hackable.handleSlice(results);
+
+				if(backIsNew) {
+                    Destroy(jobSpecification.Subject);
+				}
             }
         }
         

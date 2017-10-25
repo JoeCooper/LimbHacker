@@ -65,6 +65,11 @@ namespace NobleMuffins.LimbHacker
             {
                 handler.handleSlice(results);
             }
+
+			if (Sliced != null)
+			{
+				Sliced(this, new SliceEventArgs(results));
+			}
         }
 
         public bool cloneAlternate(Dictionary<string, bool> hierarchyPresence)
