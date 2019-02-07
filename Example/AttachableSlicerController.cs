@@ -1,18 +1,21 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(SwordVelocityFilter))]
-public class AttachableSlicerController : MonoBehaviour
+namespace NobleMuffins.LimbHacker.Examples
 {
-	private SwordVelocityFilter swordVelocityFilter;
-	public GameObject slicer;
-	
-	void Start ()
+	[RequireComponent(typeof(SwordVelocityFilter))]
+	public class AttachableSlicerController : MonoBehaviour
 	{
-		swordVelocityFilter = GetComponent<SwordVelocityFilter>();
-	}
+		private SwordVelocityFilter swordVelocityFilter;
+		public GameObject slicer;
 
-	void Update ()
-	{
-		slicer.SetActive( swordVelocityFilter.IsFastEnoughToCut );
+		void Start()
+		{
+			swordVelocityFilter = GetComponent<SwordVelocityFilter>();
+		}
+
+		void Update()
+		{
+			slicer.SetActive(swordVelocityFilter.IsFastEnoughToCut);
+		}
 	}
 }

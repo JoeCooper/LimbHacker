@@ -1,22 +1,25 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class MarkOfCain : MonoBehaviour
+namespace NobleMuffins.LimbHacker.Examples
 {
-	private readonly static List<GameObject> markedObjects = new List<GameObject>();
-	
-	void Start()
+	public class MarkOfCain : MonoBehaviour
 	{
-		markedObjects.Add(gameObject);
-	}
-	
-	public static void DestroyAllMarkedObjects()
-	{
-		foreach(var go in markedObjects)
+		private readonly static List<GameObject> markedObjects = new List<GameObject>();
+
+		void Start()
 		{
-			if(go != null) Destroy(go);
+			markedObjects.Add(gameObject);
 		}
-		
-		markedObjects.Clear();
+
+		public static void DestroyAllMarkedObjects()
+		{
+			foreach (var go in markedObjects)
+			{
+				if (go != null) Destroy(go);
+			}
+
+			markedObjects.Clear();
+		}
 	}
 }

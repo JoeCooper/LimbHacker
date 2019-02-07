@@ -1,22 +1,28 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[RequireComponent(typeof(Button))]
-public class RestartButton : MonoBehaviour
+namespace NobleMuffins.LimbHacker.Examples
 {
-	public Spawner spawner;
+	[RequireComponent(typeof(Button))]
+	public class RestartButton : MonoBehaviour
+	{
+		public Spawner spawner;
 
-	private Button button;
+		private Button button;
 
-	void Start() {
-		button = gameObject.GetComponent<Button>();
-	}
+		void Start()
+		{
+			button = gameObject.GetComponent<Button>();
+		}
 
-	void Update () {
-		button.visible = spawner.CanInstantiate;
-	}
+		void Update()
+		{
+			button.visible = spawner.CanInstantiate;
+		}
 
-	void OnClick() {
-		spawner.Instantiate();
+		void OnClick()
+		{
+			spawner.Instantiate();
+		}
 	}
 }
