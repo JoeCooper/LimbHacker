@@ -21,7 +21,8 @@ namespace NobleMuffins.LimbHacker.Guts
         {
             parentHackable.Slice(positionInWorldSpace, normalInWorldSpace);
         }
-
+#pragma warning disable 0067
         public event EventHandler<SliceEventArgs> Sliced;
+#pragma warning restore 0067
     }
 }
