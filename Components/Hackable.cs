@@ -16,7 +16,7 @@ namespace NobleMuffins.LimbHacker
 
         public InfillMode infillMode = InfillMode.Sloppy;
 
-        private bool destructionPending = false;
+        protected bool destructionPending = false;
 
         void Start()
         {
