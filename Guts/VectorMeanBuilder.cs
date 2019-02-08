@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace NobleMuffins.LimbHacker.Guts
 {
-	public class VectorAccumulator
+	public class VectorMeanBuilder
 	{
 		private Vector3 aggregatedFigures = Vector3.zero;
 		private int count = 0;

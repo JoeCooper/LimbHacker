@@ -147,7 +147,7 @@ namespace NobleMuffins.LimbHacker.Guts
                     bravoObject.layer = jobSpecification.Subject.layer;
                 }
 
-                ApplySnapshotsToRoot(alfaObject, jobYield.Alfa);
+				ApplySnapshotsToRoot(alfaObject, jobYield.Alfa);
                 ApplySnapshotsToRoot(bravoObject, jobYield.Bravo);
                                                 
                 var results = new GameObject[] {
