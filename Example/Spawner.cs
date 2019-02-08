@@ -1,40 +1,45 @@
 ﻿using UnityEngine;
 
-public class Spawner : MonoBehaviour {
-	
-	public GameObject puppet;
-	
-	public Object prefab;
-	
-	public System.Action<GameObject> instantiationListeners;
-	
-	public GUISkin skin;
+namespace NobleMuffins.LimbHacker.Examples
+{
+	public class Spawner : MonoBehaviour
+	{
 
-	// Use this for initialization
-	void Start ()
-	{
-		Instantiate();
-	}
-	
-	public void Instantiate()
-	{
-		if(CanInstantiate)
+		public GameObject puppet;
+
+		public Object prefab;
+
+		public System.Action<GameObject> instantiationListeners;
+
+		public GUISkin skin;
+
+		// Use this for initialization
+		void Start()
 		{
-			MarkOfCain.DestroyAllMarkedObjects();
-			
-			if(puppet == null)
-			{
-				puppet = GameObject.Instantiate(prefab, transform.position, transform.rotation) as GameObject;
-			}
-			
-			instantiationListeners(puppet);
+			Instantiate();
 		}
-	}
 
-	public bool CanInstantiate
-	{
-		get {
-			return puppet == null;
+		public void Instantiate()
+		{
+			if (CanInstantiate)
+			{
+				MarkOfCain.DestroyAllMarkedObjects();
+
+				if (puppet == null)
+				{
+					puppet = GameObject.Instantiate(prefab, transform.position, transform.rotation) as GameObject;
+				}
+
+				instantiationListeners(puppet);
+			}
+		}
+
+		public bool CanInstantiate
+		{
+			get
+			{
+				return puppet == null;
+			}
 		}
 	}
 }
